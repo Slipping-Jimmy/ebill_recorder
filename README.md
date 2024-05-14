@@ -42,7 +42,7 @@ This Python script automatically fetches electronic billing information from Gma
 ## Usage
 Run the script to fetch new e-bill records and update the Google Sheet:
 
-python script_name.py
+python ebill_recorder_local.py
 
 
 Adjust the `SHEET_NAME` and `WORKSHEET_NAME` variables in the script to match your Google Sheet configuration.
