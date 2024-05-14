@@ -41,3 +41,17 @@ This Python script automatically fetches electronic billing information from Gma
 
 ## Usage
 Run the script to fetch new e-bill records and update the Google Sheet:
+
+python script_name.py
+
+
+Adjust the `SHEET_NAME` and `WORKSHEET_NAME` variables in the script to match your Google Sheet configuration.
+
+## Customization
+You can customize the script by modifying the regular expressions used to extract data from emails or by changing the Google Sheet structure in the script settings.
+
+## Important Notes
+- Ensure you comply with all applicable laws and Google's terms of service when using this script.
+- Handle sensitive data with care, especially when authorizing third-party access to your Gmail and Google Sheets.
+
+---
