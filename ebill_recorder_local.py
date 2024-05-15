@@ -16,7 +16,7 @@ import re
 
 
 # If modifying these scopes, delete the file token.json.
-SHEET_NAME = '驊驊愛記帳 3.0'
+SHEET_NAME = '我愛記帳 3.0'
 WORKSHEET_NAME = '外送'
 TOKEN_PATH = 'token.json'
 CREDENTIALS_PATH = 'credentials.json'
@@ -56,6 +56,7 @@ class EbillRecorder:
                     flow = InstalledAppFlow.from_client_secrets_file(
                         CREDENTIALS_PATH, SCOPES)
                     creds = flow.run_local_server(port=0)
+                    # creds = flow.run_console()
                 # Save the credentials for the next run
                 with open(TOKEN_PATH, 'w') as token_file:
                     token_file.write(creds.to_json())
@@ -93,7 +94,7 @@ class EbillRecorder:
             results = service.users().messages().list(userId='me', q=query).execute()
             messages = results.get('messages', [])
             if not messages:
-                print('No messages found.')
+                print(f'No new messages in {self.__class__.__name__}.')
                 return
             # Main loop
             for message in reversed(messages):
@@ -167,12 +168,13 @@ class EbillRecorder:
             self.write_to_sheet(info)
 
     def count_down(self):
-        print('Waiting for API coldtime')
+        print('Waiting for API cooldown')
         for i in range(60, 0, -1):
-            sys.stdout.write(f'\r{i}')
+            sys.stdout.write(f'\r{i}    ')  # 在数字后添加空格
             sys.stdout.flush()
             time.sleep(1)
-        print()
+        print('\r          \r', end='')  # 清除最后的输出
+
 
 class UbereatsEbillRecorder(EbillRecorder):
     def __init__(self):
@@ -210,5 +212,7 @@ class FoodpandaEbillRecoder(EbillRecorder):
     
 
 if __name__ == '__main__':
+    print('processing Ubereats ebill...')
     UbereatsEbillRecorder()
+    print('processing Foodpanda ebill...')
     FoodpandaEbillRecoder()
